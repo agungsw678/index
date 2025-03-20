@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Bootstrap JS (Pastikan ini ada) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Form Seminar IT Nasional</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <style>
+      body {
+        background-color: #79b3ed;
+      }
+      .container {
+        max-width: 600px;
+        margin-top: 50px;
+      }
+      .error {
+        color: red;
+        font-size: 0.875em;
+      }
+      .footer {
+        background-color: #0d47a1;
+        color: white;
+        padding: 20px;
+        text-align: center;
+        margin-top: 20px;
+        font-size: 1.2em;
+      }
+      .navbar-brand {
+        display: flex;
+        align-items: center;
+      }
+      .navbar-brand img {
+        height: 40px;
+        margin-right: 10px;
+      }
+      .form-control:focus {
+        border-color: #0d47a1;
+        box-shadow: 0 0 0 0.25rem rgba(13, 71, 161, 0.25);
+      }
+      .btn-primary {
+        background-color: #0d47a1;
+        border-color: #0d47a1;
+      }
+      .btn-primary:hover {
+        background-color: #0a3d8c;
+        border-color: #0a3d8c;
+      }
+      .form-control.is-invalid {
+        border-color: red;
+      }
+      .fade-in {
+        animation: fadeIn 0.5s ease-in-out;
+      }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container">
+        <a class="navbar-brand" href="#">
+          <img src="polteklogo.jpg" alt="Logo PNM" />
+          Form Seminar IT Nasional
+        </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <i class="fas fa-bars"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link active" href="index.html">Beranda</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="Tentang.html">Tentang</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="Kontak.html">Kontak</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container mt-5">
+      <form id="registrationForm">
+          <div class="mb-3">
+              <label for="fullName" class="form-label">Nama Lengkap</label>
+              <input type="text" id="fullName" class="form-control" required>
+              <div class="invalid-feedback" id="fullNameError"></div>
+          </div>
+
+          <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" id="email" class="form-control" required>
+            <div class="invalid-feedback" id="emailError"></div>
+        </div>
+
+        <div class="mb-3">
+          <label for="password" class="form-label">Password</label>
+          <input type="password" id="password" class="form-control" required>
+          <div class="invalid-feedback" id="passwordError"></div>
+      </div>
+
+      <div class="mb-3">
+        <label for="confirmPassword" class="form-label">Konfirmasi Password</label>
+        <input type="password" id="confirmPassword" class="form-control" required>
+        <div class="invalid-feedback" id="confirmPasswordError"></div>
+    </div>
+
+    <div class="mb-3">
+      <label for="birthDate" class="form-label">Tanggal Lahir</label>
+      <input type="date" id="birthDate" class="form-control" required>
+      <div class="invalid-feedback" id="birthDateError"></div>
+  </div>
+
+  <div class="mb-3">
+    <label for="phone" class="form-label">Nomor HP</label>
+    <input type="text" id="phone" class="form-control" required>
+    <div class="invalid-feedback" id="phoneError"></div>
+</div>
+
+        <button type="submit" id="submitBtn" class="btn btn-primary" disabled>Daftar</button>
+      </form>
+      <div id="successMessage" class="alert alert-success mt-3" style="display:none;">Pendaftaran berhasil!</div>
+  </div>
+
+
+    <footer class="footer">
+      <div class="container">&copy; 2025 Agung Setyo W | NIM: 243307002</div>
+    </footer>
+
+    <script>
+      const form = document.getElementById("registrationForm");
+      const submitBtn = document.getElementById("submitBtn");
+
+      function validateForm() {
+          let isValid = true;
+
+          const fullName = document.getElementById("fullName");
+          const fullNameError = document.getElementById("fullNameError");
+          if (fullName.value.length < 3) {
+              fullNameError.textContent = "Nama lengkap minimal 3 karakter.";
+              fullName.classList.add("is-invalid");
+              isValid = false;
+          } else {
+              fullNameError.textContent = "";
+              fullName.classList.remove("is-invalid");
+          }
+
+          const email = document.getElementById("email");
+          const emailError = document.getElementById("emailError");
+          const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+          if (!emailPattern.test(email.value)) {
+              emailError.textContent = "Format email tidak valid.";
+              email.classList.add("is-invalid");
+              isValid = false;
+          } else {
+              emailError.textContent = "";
+              email.classList.remove("is-invalid");
+          }
+
+          const password = document.getElementById("password");
+          const passwordError = document.getElementById("passwordError");
+          if (password.value.length < 8) {
+              passwordError.textContent = "Password minimal 8 karakter.";
+              password.classList.add("is-invalid");
+              isValid = false;
+          } else {
+              passwordError.textContent = "";
+              password.classList.remove("is-invalid");
+          }
+
+          const confirmPassword = document.getElementById("confirmPassword");
+          const confirmPasswordError = document.getElementById("confirmPasswordError");
+          if (confirmPassword.value !== password.value) {
+              confirmPasswordError.textContent = "Konfirmasi password harus sama.";
+              confirmPassword.classList.add("is-invalid");
+              isValid = false;
+          } else {
+              confirmPasswordError.textContent = "";
+              confirmPassword.classList.remove("is-invalid");
+          }
+
+          const birthDate = document.getElementById("birthDate");
+          const birthDateError = document.getElementById("birthDateError");
+          const birthYear = new Date(birthDate.value).getFullYear();
+          if (birthYear > 2006) {
+              birthDateError.textContent = "Tanggal lahir harus sebelum tahun 2006.";
+              birthDate.classList.add("is-invalid");
+              isValid = false;
+          } else {
+              birthDateError.textContent = "";
+              birthDate.classList.remove("is-invalid");
+          }
+
+          const phone = document.getElementById("phone");
+          const phoneError = document.getElementById("phoneError");
+          const phonePattern = /^\+62\d{9,13}$/;
+          if (!phonePattern.test(phone.value)) {
+              phoneError.textContent = "Nomor HP harus dalam format +62XXXXXXXXXXX (9-13 digit setelah +62).";
+              phone.classList.add("is-invalid");
+              isValid = false;
+          } else {
+              phoneError.textContent = "";
+              phone.classList.remove("is-invalid");
+          }
+
+          submitBtn.disabled = !isValid;
+      }
+
+      document.querySelectorAll("input").forEach(input => {
+          input.addEventListener("input", validateForm);
+      });
+
+      form.addEventListener("submit", function (event) {
+          event.preventDefault();
+          document.getElementById("successMessage").style.display = "block";
+          setTimeout(() => {
+              window.location.href = "Tentang.html";
+          }, 1500);
+      });
+  </script>
+</body>
+</html>
